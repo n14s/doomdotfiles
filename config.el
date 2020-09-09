@@ -300,6 +300,21 @@
 (map! :leader
       :desc "Open like spacemacs" "SPC" #'counsel-M-x)
 
+(use-package! general)
+;; Creating a constant for making future changes simpler
+(defconst my-leader "SPC")
+;; Tell general all about it
+(general-create-definer my-leader-def
+  :prefix my-leader)
+  ;; :prefix my-leader)
+;; (general-create-definer my-local-leader-def
+;;   ;; :prefix my-local-leader
+;;   :prefix "SPC m")
+
+;; I like short names
+(general-evil-setup t)
+;; Stop telling me things begin with non-prefix keys
+(general-auto-unbind-keys)
 
 (general-define-key
  :keymaps '(insert visual normal)
@@ -371,3 +386,30 @@
      :desc "Insert" "i" 'org-noter-insert-note
      ))
  ))
+
+(use-package helm
+  :bind
+  (("M-x" . helm-M-x)
+   ("C-x C-f" . helm-find-files)
+   :map helm-map
+   ("C-j" . helm-next-line)
+   ("C-k" . helm-previous-line))
+)
+
+(use-package helm-files
+  :bind
+  (:map helm-find-files-map
+   ("C-h" . helm-find-files-up-one-level)
+   ("C-l" . helm-execute-persistent-action))
+)
+
+; avy-goto-char with C-f
+(define-key! evil-motion-state-map "C-f" nil)
+(define-key! magit-mode-map "C-f" nil)
+(define-key! :keymaps +default-minibuffer-maps "C-f" nil)
+(map!
+ :g "C-f" #'avy-goto-char
+ (:map minibuffer-local-map
+   "C-f" #'avy-goto-char))
+(define-key minibuffer-local-map (kbd "C-f") #'avy-goto-char)
+(global-set-key (kbd "C-f") 'avy-goto-char)
