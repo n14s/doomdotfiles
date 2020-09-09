@@ -82,8 +82,6 @@
 (setq line-spacing 0.3)                                   ; seems like a nice line spacing balance.
 
 ;; org
-(setq org-directory "~/drive/org/")
-
 (setq
    org_notes (concat (getenv "HOME") "/drive/org/")
    zot_bib (concat (getenv "HOME") "/drive/master.bib")
@@ -193,8 +191,8 @@
 ;; org-bibtex
 (after! org-ref
   (setq
-   bibtex-completion-notes-path "/home/haozeke/Git/Gitlab/Mine/Notes/"
-   bibtex-completion-bibliography "/home/haozeke/GDrive/zotLib.bib"
+   bibtex-completion-notes-path "/home/mrpeanutbutter/drive/org/"
+   bibtex-completion-bibliography "/home/mrpeanutbutter/dirve/org/master.bib"
    bibtex-completion-pdf-field "file"
    bibtex-completion-notes-template-multiple-files
    (concat
