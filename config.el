@@ -184,14 +184,14 @@
          org-ref-default-bibliography (list "/home/mrpeanutbutter/drive/org/master.bib")
          org-ref-bibliography-notes "/home/mrpeanutbutter/drive/org/bibnotes.org"
          org-ref-note-title-format "* TODO %y - %t\n :PROPERTIES:\n  :Custom_ID: %k\n  :NOTER_DOCUMENT: %F\n :ROAM_KEY: cite:%k\n  :AUTHOR: %9a\n  :JOURNAL: %j\n  :YEAR: %y\n  :VOLUME: %v\n  :PAGES: %p\n  :DOI: %D\n  :URL: %U\n :END:\n\n"
-         org-ref-notes-directory "/home/mrpeanutbutter/drive/org/"
+         org-ref-notes-directory "/home/mrpeanutbutter/drive/org"
          org-ref-notes-function 'orb-edit-notes
     ))
 
 ;; org-bibtex
 (after! org-ref
   (setq
-   bibtex-completion-notes-path "/home/mrpeanutbutter/drive/org/"
+   bibtex-completion-notes-path "/home/mrpeanutbutter/drive/org"
    bibtex-completion-bibliography "/home/mrpeanutbutter/dirve/org/master.bib"
    bibtex-completion-pdf-field "file"
    bibtex-completion-notes-template-multiple-files
@@ -367,7 +367,6 @@
 (after! pdf-view
   ;; open pdfs scaled to fit page
   (setq-default pdf-view-display-size 'fit-width)
-  (add-hook! 'pdf-view-mode-hook (evil-colemak-basics-mode -1))
   ;; automatically annotate highlights
   (setq pdf-annot-activate-created-annotations t
         pdf-view-resize-factor 1.1)
@@ -413,3 +412,7 @@
    "C-f" #'avy-goto-char))
 (define-key minibuffer-local-map (kbd "C-f") #'avy-goto-char)
 (global-set-key (kbd "C-f") 'avy-goto-char)
+
+;;example for keybinding
+;;(map! :leader
+;;     :desc "Jump to char" "/ c" #'avy-goto-char)
