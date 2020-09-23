@@ -70,6 +70,8 @@
            :repo "alphapapa/org-protocol-capture-html"))
 
 
+(package! org-pdftools :recipe (:host github :repo "fuxialexander/org-pdftools" :files ("org-pdftools.el")))
+(package! org-noter-pdftools :recipe (:host github :repo "fuxialexander/org-pdftools" :files ("org-noter-pdftools.el")))
 (package! org-noter)
 
 

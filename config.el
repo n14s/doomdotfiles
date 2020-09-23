@@ -84,7 +84,7 @@
 ;; org
 (setq
    org_notes (concat (getenv "HOME") "/drive/org/")
-   zot_bib (concat (getenv "HOME") "/drive/master.bib")
+   zot_bib (concat (getenv "HOME") "/drive/org/master.bib")
    org-directory org_notes
    deft-directory org_notes
    org-roam-directory org_notes
@@ -155,6 +155,8 @@
 (setq org-startup-with-inline-images 'nil)
 (setq org-image-actual-width 500)
 )
+;; Compiler
+(setq org-latex-pdf-process (list "latexmk -shell-escape -f -xelatex %f"))
 
 
 ;; functions
@@ -192,7 +194,7 @@
 (after! org-ref
   (setq
    bibtex-completion-notes-path "/home/mrpeanutbutter/drive/org"
-   bibtex-completion-bibliography "/home/mrpeanutbutter/dirve/org/master.bib"
+   bibtex-completion-bibliography "/home/mrpeanutbutter/drive/org/master.bib"
    bibtex-completion-pdf-field "file"
    bibtex-completion-notes-template-multiple-files
    (concat
@@ -234,8 +236,20 @@
 
            :unnarrowed t))))
 
+;; pdftools
+
+(use-package! org-pdftools
+  :hook (org-load . org-pdftools-setup-link))
+
+(use-package! org-noter-pdftools
+  :config
+  (after! pdf-annot
+    (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
+
+
 ;; org-noter
 (use-package! org-noter
+  :commands (org-noter)
   :after (:any org pdf-view)
   :config
   (setq
@@ -248,7 +262,9 @@
    ;; Everything is relative to the rclone mega
    org-noter-notes-search-path (list org_notes)
    )
+  (add-hook! org-noter-notes-mode (require 'org-noter-pdftools))
   )
+
 
 ;; org-capture
 ;;; buffer size
@@ -352,6 +368,7 @@
           :desc "Normal" "h" 'org-insert-heading
           :desc "Todo" "t" 'org-insert-todo-heading
           (:prefix ("s" . "Subheadings")
+
             :desc "Normal" "s" 'org-insert-subheading
             :desc "Todo" "t" 'org-insert-todo-subheading
             )
@@ -375,16 +392,19 @@
    :map pdf-view-mode-map
    :n "g g"          #'pdf-view-first-page
    :n "G"            #'pdf-view-last-page
-   :n "N"            #'pdf-view-next-page-command
-   :n "E"            #'pdf-view-previous-page-command
-   :n "e"            #'evil-collection-pdf-view-previous-line-or-previous-page
-   :n "n"            #'evil-collection-pdf-view-next-line-or-next-page
+   :n "J"            #'pdf-view-next-page-command
+   :n "K"            #'pdf-view-previous-page-command
+   :n "k"            #'evil-collection-pdf-view-previous-line-or-previous-page
+   :n "j"            #'evil-collection-pdf-view-next-line-or-next-page
+   :n "C-<"        #'pdf-annot-list-display-annotation-from-id
    :localleader
    (:prefix "o"
     (:prefix "n"
      :desc "Insert" "i" 'org-noter-insert-note
      ))
- ))
+   )
+; (add-hook 'pdf-annot-list-mode-hook (define-key 'evil-normal-state-local-map "<C-tab>" 'pdf-annot-list-display-annotation-from-id))
+ )
 
 (use-package helm
   :bind
