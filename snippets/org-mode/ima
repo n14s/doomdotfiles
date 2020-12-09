@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: ima
+# key: <ima
+# --
+#+caption: ${1:caption of the image}
+[[file:~/Documents/Projects/studienarbeit/img/${2:image_path}]]$0

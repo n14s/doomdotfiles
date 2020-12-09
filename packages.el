@@ -90,10 +90,10 @@
 (package! company-org-roam :recipe (:host github :repo "org-roam/company-org-roam"))
 (package! evil-escape)
 
-(package! emacs-snippets
-  :recipe (:host github
-           :repo "hlissner/emacs-snippets"
-           :files ("*")))
+;; (package! emacs-snippets
+;;   :recipe (:host github
+;;            :repo "hlissner/emacs-snippets"
+;;            :files ("*")))
 
 (package! yasnippet-snippets
   :recipe (:host github
@@ -101,3 +101,9 @@
            :files ("*")))
 
 (package! cdlatex)
+
+(package! rg)
+
+(package! centaur-tabs)
+
+(package! flx)
