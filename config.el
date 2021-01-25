@@ -54,7 +54,7 @@
 
 ;; Basic Stuff: Appearance etc
 ;(setq doom-theme 'doom-one)
-(setq doom-theme 'doom-Iosvkem)
+(setq doom-theme 'doom-gruvbox)
 
 (if (eq initial-window-system 'x)                 ; if started by emacs command or desktop file
     (toggle-frame-maximized)
@@ -682,6 +682,7 @@
    "C-f" #'avy-goto-char))
 (define-key minibuffer-local-map (kbd "C-f") #'avy-goto-char)
 (global-set-key (kbd "C-f") 'avy-goto-char)
+(global-set-key (kbd "C-q") 'evil-avy-goto-char-2)
 
 ;;example for keybinding
 ;;(map! :leader
@@ -732,7 +733,6 @@
 	  (if this-win-2nd (other-window 1))))))
 
 (define-key ctl-x-4-map "t" 'toggle-window-split)
-
 ;; vertical split by default
 (setq split-height-threshold nil)
 (setq split-width-threshold 0)
@@ -880,3 +880,20 @@
       (:prefix ("D" . "Dict")
           :desc "add word" "a" 'my-save-word
           ))
+
+;; thesaurus synomnyms
+(setq synosaurus-backend 'synosaurus-backend-openthesaurus)
+
+;; google translate
+(setq google-translate-default-source-language "en")
+(setq google-translate-default-target-language "de")
+
+(use-package google-translate
+  :ensure t
+  :custom
+  (google-translate-backend-method 'curl)
+  :config
+   (defun google-translate--search-tkk () "Search TKK." (list 430675 2721866130)))
+
+(dolist (hook '(org-mode-hook))
+  (add-hook hook (lambda () (flyspell-mode 0)) t))

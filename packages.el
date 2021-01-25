@@ -107,3 +107,7 @@
 (package! centaur-tabs)
 
 (package! flx)
+
+(package! synosaurus)
+
+(package! google-translate)
