@@ -58,6 +58,7 @@
 (package! package-lint)
 (package! flycheck-package)
 
+(package! bibtex-completion)
 
 
 
@@ -70,9 +71,9 @@
            :repo "alphapapa/org-protocol-capture-html"))
 
 
-(package! org-pdftools :recipe (:host github :repo "fuxialexander/org-pdftools" :files ("org-pdftools.el")))
-(package! org-noter-pdftools :recipe (:host github :repo "fuxialexander/org-pdftools" :files ("org-noter-pdftools.el")))
 (package! org-noter)
+(package! org-pdftools :pin "a5b61bca3f8c91b0859bb0df1a929f9a31a57b99" :recipe (:host github :repo "fuxialexander/org-pdftools" :files ("org-pdftools.el")))
+(package! org-noter-pdftools :pin "a5b61bca3f8c91b0859bb0df1a929f9a31a57b99" :recipe (:host github :repo "fuxialexander/org-pdftools" :files ("org-noter-pdftools.el")))
 
 
 (package! org-ref)
@@ -85,8 +86,18 @@
 
 (package! org-babel-eval-in-repl)
 
-(package! org-roam-bibtex)
 (package! helm-bibtex)
+
+(package! org-roam-bibtex
+  :recipe (:host github :repo "org-roam/org-roam-bibtex"))
+
+;; When using org-roam via the `+roam` flag
+(unpin! org-roam)
+
+;; When using bibtex-completion via the `biblio` module
+(unpin! bibtex-completion helm-bibtex ivy-bibtex)
+
+
 (package! company-org-roam :recipe (:host github :repo "org-roam/company-org-roam"))
 (package! evil-escape)
 
@@ -111,3 +122,31 @@
 (package! synosaurus)
 
 (package! google-translate)
+
+(package! helpful)
+
+(package! org-bullets)
+
+; (package! org-super-agenda)
+
+(package! org-clock-convenience)
+
+(package! framemove)
+
+(package! switch-window)
+
+(package! anki-editor)
+
+(package! exec-path-from-shell)
+
+
+(package! zoom)
+
+(package! powerthesaurus)
+
+(package! flx)
+
+(package! eshell-toggle)
+(package! pyvenv)
+
+(package! lsp-pyright)
