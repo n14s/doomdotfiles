@@ -25,7 +25,7 @@
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        (ivy               ; a search engine for love and life
-       +childframe      ; a better UI for ivy (Emacs 26+)
+       ;;+childframe      ; a better UI for ivy (Emacs 26+)
         +prescient       ; better? filtering and sorting?
         +icons           ; enables file icons
         +fuzzy)          ; enable fuzzy search backend for ivy
