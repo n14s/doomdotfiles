@@ -1439,8 +1439,8 @@ With a prefix ARG, remove start location."
 (global-set-key (kbd "M-f") 'avy-goto-char)
 (global-set-key (kbd "C-q") 'evil-avy-goto-char-2)
 
-(global-set-key (kbd "M-w") 'next-buffer)
-(global-set-key (kbd "M-q") 'previous-buffer)
+(global-set-key (kbd "M-q") 'centaur-tabs-backward)
+(global-set-key (kbd "M-w") 'centaur-tabs-forward)
 
 
 (global-set-key (kbd "C-S-a") 'eshell)
