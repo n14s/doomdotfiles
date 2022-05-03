@@ -150,3 +150,5 @@
 (package! pyvenv)
 
 (package! lsp-pyright)
+
+(package! git-timemachine)
