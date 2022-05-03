@@ -1732,6 +1732,13 @@ With a prefix ARG, remove start location."
 
 (global-set-key (kbd "M-\"") 'insert-pair)
 (global-set-key (kbd "M-[") 'insert-pair)
+
+; faces
+; add magit status file font bg color to distinguish better
+(custom-set-faces!
+  '(magit-diff-file-heading :background "#3b0024")
+  '(magit-branch-current :background "#73092b"))
+
 ;;
 ;; go for emacs
 ;;
