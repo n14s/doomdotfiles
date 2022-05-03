@@ -1459,7 +1459,15 @@ With a prefix ARG, remove start location."
 
 
 ;; org noter
-(map! :localleader
+;;(map! :localleader
+;;      :map (org-mode-map pdf-view-mode-map)
+;;      (:prefix ("o" . "Org")
+;;        (:prefix ("n" . "Noter")
+;;          :desc "Noter" "n" 'org-noter
+;;          :desc "window location" "w" 'org-noter-set-notes-window-location
+;;          )))
+
+(map! :leader
       :map (org-mode-map pdf-view-mode-map)
       (:prefix ("o" . "Org")
         (:prefix ("n" . "Noter")
