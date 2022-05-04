@@ -1756,3 +1756,6 @@ With a prefix ARG, remove start location."
 ;; Start LSP Mode and YASnippet mode
 (add-hook 'go-mode-hook #'lsp-deferred)
 (add-hook 'go-mode-hook #'yas-minor-mode)
+
+
+(format-all-mode -1)
