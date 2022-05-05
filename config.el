@@ -1436,8 +1436,8 @@ With a prefix ARG, remove start location."
  (:map minibuffer-local-map
    "M-f" #'avy-goto-char))
 (define-key minibuffer-local-map (kbd "M-f") #'avy-goto-char)
-(global-set-key (kbd "M-f") 'avy-goto-char)
-(global-set-key (kbd "C-q") 'evil-avy-goto-char-2)
+(global-set-key (kbd "C-q") 'avy-goto-char)
+(global-set-key (kbd "C-z") 'evil-avy-goto-char-2)
 
 (global-set-key (kbd "M-q") 'centaur-tabs-backward)
 (global-set-key (kbd "M-w") 'centaur-tabs-forward)
