@@ -1483,10 +1483,9 @@ With a prefix ARG, remove start location."
           :desc "insert" "i" 'org-insert-link
           ))
 
-;; open link
 (map! :leader
-      (:prefix ("o" . "open")
-          :desc "link" "l" 'link-hint-open-link-at-point
+      (:prefix ("l" . "link")
+          :desc "follow" "f" 'link-hint-open-link-at-point
           ))
 
 
