@@ -1758,3 +1758,5 @@ With a prefix ARG, remove start location."
 
 
 (format-all-mode -1)
+
+(setq auth-sources '("~/.authinfo"))
