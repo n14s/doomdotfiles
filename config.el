@@ -372,7 +372,22 @@
                                ,nm/daily-note-header
                                ("Log"))
  :unnarrowed t)
-
+("m" "meeting" entry
+      "* %<%I:%M %p> - %^{Meeting Title}  :meetings:\n%?\n"
+      :if-new (file+head+olp ,nm/daily-note-filename
+                             ,nm/daily-note-header
+                             ("Meeting"))
+ :unnarrowed t)
+;;("t" "tasks" plain (file "~/Documents/notes/roam/templates/tasks.org")
+;; :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
+;; :unnarrowed t)
+("t" "task" entry
+ "* TODO %?\n  %U\n  %a\n  %i"
+ :if-new (file+head+olp ,nm/daily-note-filename
+                        ,nm/daily-note-header
+                        ("Tasks"))
+ :unnarrowed t
+ :empty-lines 1)
       ))
 
   (org-roam-directory "~/Documents/notes/roam")
