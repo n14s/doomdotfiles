@@ -343,6 +343,9 @@
 ;;
 ;;
 (setq org-roam-dailies-directory "journal/")
+(setq nm/daily-note-filename "%<%Y-%m-%d>.org"
+      nm/daily-note-header "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
+
 (use-package! org-roam
   :ensure t
   :init
@@ -350,19 +353,24 @@
 (setq org-roam-dailies-directory "journal/")
   :custom
   (org-roam-dailies-capture-templates
-   '(
-     ("d" "default" entry "* %<%I:%M %p>: %?"
-      :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
-:unnarrowed t
-)
+`(("d" "default" entry
+        "* %?"
+        :if-new (file+head ,nm/daily-note-filename
+                           ,nm/daily-note-header)
+ :unnarrowed t)
 ("c" "check" plain (file "~/Documents/notes/roam/templates/check.org")
- :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
+ :if-new (file+head ,nm/daily-note-filename
+                    ,nm/daily-note-header)
  :unnarrowed t)
 ("s" "sleep" plain (file "~/Documents/notes/roam/templates/sleep.org")
- :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
+ :if-new (file+head ,nm/daily-note-filename
+                    ,nm/daily-note-header)
  :unnarrowed t)
-("e" "experience" plain (file "~/Documents/notes/roam/templates/experience.org")
- :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
+("j" "journal" entry
+        "* %<%I:%M %p> - Journal  :journal:\n\n%?\n\n"
+        :if-new (file+head+olp ,nm/daily-note-filename
+                               ,nm/daily-note-header
+                               ("Log"))
  :unnarrowed t)
 
       ))
