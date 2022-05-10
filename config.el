@@ -406,6 +406,23 @@
   (require 'org-roam-dailies) ;; Ensure the keymap is available
   (org-roam-setup))
 
+(defun n14/org-roam-goto-month ()
+  (interactive)
+  (org-roam-capture- :goto (when (org-roam-node-from-title-or-alias (format-time-string "%Y-%B")) '(4))
+                     :node (org-roam-node-create)
+                     :templates '(("m" "month" plain "\n* Goals\n\n%?* Summary\n\n"
+                                   :if-new (file+head "%<%Y-%B>.org"
+                                                      "#+title: %<%Y-%B>\n#+filetags: Project\n")
+                                   :unnarrowed t))))
+
+(defun n14/org-roam-goto-year ()
+  (interactive)
+  (org-roam-capture- :goto (when (org-roam-node-from-title-or-alias (format-time-string "%Y")) '(4))
+                     :node (org-roam-node-create)
+                     :templates '(("y" "year" plain "\n* Goals\n\n%?* Summary\n\n"
+                                   :if-new (file+head "%<%Y>.org"
+                                                      "#+title: %<%Y>\n#+filetags: Project\n")
+                                   :unnarrowed t))))
 (defun org-roam-node-insert-immediate (arg &rest args)
   (interactive "P")
   (let ((args (push arg args))
