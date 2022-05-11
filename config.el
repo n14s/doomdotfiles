@@ -423,6 +423,27 @@
                                    :if-new (file+head "%<%Y>.org"
                                                       "#+title: %<%Y>\n#+filetags: Project\n")
                                    :unnarrowed t))))
+; hydra for roam
+(defhydra n14/org-roam-jump-menu (:hint nil)
+  "
+^Dailies^        ^Capture^       ^Jump^
+^^^^^^^^-------------------------------------------------
+_t_: today       _T_: today       _m_: current month
+_r_: tomorrow    _R_: tomorrow    _e_: current year
+_y_: yesterday   _Y_: yesterday   ^ ^
+_d_: date        ^ ^              ^ ^
+"
+  ("t" org-roam-dailies-goto-today :color blue)
+  ("r" org-roam-dailies-goto-tomorrow :color blue)
+  ("y" org-roam-dailies-goto-yesterday :color blue)
+  ("d" org-roam-dailies-goto-date :color blue)
+  ("T" org-roam-dailies-capture-today :color blue)
+  ("R" org-roam-dailies-capture-tomorrow :color blue)
+  ("Y" org-roam-dailies-capture-yesterday :color blue)
+  ("m" n14/org-roam-goto-month :color blue)
+  ("e" n14/org-roam-goto-year :color blue)
+  ("c" nil "cancel"))
+
 (defun org-roam-node-insert-immediate (arg &rest args)
   (interactive "P")
   (let ((args (push arg args))
