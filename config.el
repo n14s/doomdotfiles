@@ -1557,6 +1557,14 @@ With a prefix ARG, remove start location."
           ))
 
 
+
+;; open link
+;;(map! :leader
+;;      (:prefix ("o" . "open")
+;;          :desc "link" "l" 'link-hint-open-link-at-point
+;;          ))
+
+
 ;;(map!
 ;;      :map (pdf-view-mode-map)
 ;;      (:prefix ("g" . "goto")
