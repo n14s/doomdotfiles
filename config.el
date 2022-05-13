@@ -1794,6 +1794,7 @@ With a prefix ARG, remove start location."
 
 
 
+(global-set-key (kbd "Q") 'evil-execute-macro)
 
 
 
