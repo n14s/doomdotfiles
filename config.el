@@ -1802,6 +1802,7 @@ With a prefix ARG, remove start location."
 (use-package! pyvenv
   :diminish
   :config
+  (setenv "WORKON_HOME" "~/.pyenv/versions")
   (setq pyvenv-mode-line-indicator
         '(pyvenv-virtual-env-name ("[venv:" pyvenv-virtual-env-name "] ")))
   (pyvenv-mode +1))
