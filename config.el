@@ -1816,6 +1816,17 @@ With a prefix ARG, remove start location."
   '(magit-diff-file-heading :background "#3b0024")
   '(magit-branch-current :background "#73092b"))
 
+
+; find faces underneath point
+(defun what-face (pos)
+  (interactive "d")
+  (let ((face (or (get-char-property (point) 'read-face-name)
+                  (get-char-property (point) 'face))))
+    (if face (message "Face: %s" face) (message "No face at %d" pos))))
+
+(global-set-key (kbd "M-#") 'what-face)
+
+
 ;;
 ;; go for emacs
 ;;
