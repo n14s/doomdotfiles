@@ -1849,3 +1849,14 @@ With a prefix ARG, remove start location."
 (format-all-mode -1)
 
 (setq auth-sources '("~/.authinfo"))
+
+(defun clone-window-to-new-frame ()
+  (+evil-window-vsplit-a)
+  (centaur-tabs-extract-window-to-new-frame)
+  )
+
+(map! :leader
+        (:prefix ("w" . "window")
+          :desc "clone" "c" 'clone-window-to-new-frame
+         ))
+
