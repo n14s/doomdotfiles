@@ -1860,3 +1860,12 @@ With a prefix ARG, remove start location."
           :desc "clone" "c" 'clone-window-to-new-frame
          ))
 
+(map! :leader
+        (:prefix ("n" . "notes")
+          :desc "node insert" "i" 'org-roam-node-insert
+          :desc "find note" "f" '+default/find-in-notes
+          :desc "node find" "F" 'org-roam-node-find
+          :desc "node immediate" "I" 'org-roam-node-insert-immediate
+          :desc "dailies" "d" 'n14/org-roam-jump-menu/body
+         ))
+
