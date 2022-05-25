@@ -1869,3 +1869,24 @@ With a prefix ARG, remove start location."
           :desc "dailies" "d" 'n14/org-roam-jump-menu/body
          ))
 
+; hydra for modes
+(defhydra n14/hydra-modes (:hint nil)
+;  "
+;^Buffer^        ^Package^       ^Window^
+;^^^^^^^^-------------------------------------------------
+;_t_: truncate    _o_: orb-mode     ^ ^
+;^ ^              ^ ^              ^ ^
+;^ ^              ^ ^              ^ ^
+;"
+
+  ("t" toggle-truncate-lines "truncate" :color blue)
+  ("o" org-roam-bibtex-mode "orb" :color blue)
+  ("l" linum-mode "linum" :color blue)
+  ("i" org-toggle-inline-images "images" :color blue)
+  ("c" nil "cancel"))
+
+(map! :leader
+        (:prefix ("m" . "misc")
+          :desc "hydra modes" "m" 'n14/hydra-modes/body
+         ))
+
