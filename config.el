@@ -1890,3 +1890,21 @@ With a prefix ARG, remove start location."
           :desc "hydra modes" "m" 'n14/hydra-modes/body
          ))
 
+; hydra for error navigation
+(defhydra n14/hydra-error (:hint nil)
+;  "
+;^Error navigation^
+;^^^^^^^^-------------------------------------------------
+;_f_: first       _j_: next        _k_: prev        _v_: recenter
+;"
+("h" first-error "first")
+("j" next-error "next")
+("k" previous-error "prev")
+("v" recenter-top-bottom "recenter")
+("q" nil "quit"))
+
+(map! :leader
+        (:prefix ("m" . "misc")
+          :desc "hydra error" "e" 'n14/hydra-error/body
+         ))
+
