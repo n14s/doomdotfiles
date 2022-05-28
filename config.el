@@ -1908,3 +1908,18 @@ With a prefix ARG, remove start location."
           :desc "hydra error" "e" 'n14/hydra-error/body
          ))
 
+; hydra for noter
+(defhydra n14/hydra-noter (:hint nil)
+("n" org-noter "init" :color blue)
+("w" org-noter-set-notes-window-location "window")
+("c" org-noter-sync-current-note "current")
+("p" org-noter-sync-current-page-or-chapter "page")
+("j" org-noter-sync-next-note "next")
+("k" org-noter-sync-prev-note "prev")
+("q" nil "quit"))
+
+(map! :leader
+        (:prefix ("m" . "misc")
+          :desc "hydra noter" "n" 'n14/hydra-noter/body
+         ))
+
