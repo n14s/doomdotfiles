@@ -1923,3 +1923,18 @@ With a prefix ARG, remove start location."
           :desc "hydra noter" "n" 'n14/hydra-noter/body
          ))
 
+; hydra for lang
+(defhydra n14/hydra-lang (:hint nil)
+("e" google-translate-at-point-reverse "de-eng" :color blue)
+("d" google-translate-at-point "eng-de" :color blue)
+("s" synosaurus-lookup "synonym" :color blue)
+("S" +lookup/synonyms "synonym2" :color blue)
+("c" ispell-region "spellcheck" :color blue)
+("q" nil "quit"))
+
+(map! :leader
+        (:prefix ("m" . "misc")
+          :desc "hydra lang" "l" 'n14/hydra-lang/body
+         ))
+
+
