@@ -1927,8 +1927,8 @@ With a prefix ARG, remove start location."
 (defhydra n14/hydra-lang (:hint nil)
 ("e" google-translate-at-point-reverse "de-eng" :color blue)
 ("d" google-translate-at-point "eng-de" :color blue)
-("s" synosaurus-lookup "synonym" :color blue)
-("S" +lookup/synonyms "synonym2" :color blue)
+("s" +lookup/synonyms "synonym" :color blue)
+("S" synosaurus-lookup "synonym2" :color blue)
 ("c" ispell-region "spellcheck" :color blue)
 ("q" nil "quit"))
 
