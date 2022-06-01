@@ -190,6 +190,24 @@
         "M-n" #'outline-next-visible-heading
         "M-p" #'outline-previous-visible-heading)
 
+(map! :map org-mode-map
+        "C-j" #'n14/next-heading
+        "C-k" #'n14/prev-heading)
+
+(defun n14/next-heading ()
+  "Jump to next heading and scroll it to the top of screen"
+  (interactive)
+  (outline-next-visible-heading 1)
+  (evil-scroll-line-to-top nil)
+  (evil-scroll-line-up 4))
+
+(defun n14/prev-heading ()
+  "Jump to previous heading and scroll it to the top of screen"
+  (interactive)
+  (outline-previous-visible-heading 1)
+  (evil-scroll-line-to-top nil)
+  (evil-scroll-line-up 4))
+
   (defun jethro/org-archive-done-tasks ()
     "Archive all done tasks."
     (interactive)
