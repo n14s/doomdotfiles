@@ -1920,8 +1920,11 @@ With a prefix ARG, remove start location."
 
   ("t" toggle-truncate-lines "truncate" :color blue)
   ("o" org-roam-bibtex-mode "orb" :color blue)
-  ("l" linum-mode "linum" :color blue)
+  ("n" linum-mode "linum" :color blue)
   ("i" org-toggle-inline-images "images" :color blue)
+  ("l" org-toggle-link-display "link" :color blue)
+  ("p" org-toggle-pretty-entities "pretty symbols" :color blue)
+  ("f" org-toggle-latex-fragment "latex fragment" :color blue)
   ("c" nil "cancel"))
 
 (map! :leader
