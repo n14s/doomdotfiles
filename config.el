@@ -208,6 +208,27 @@
   (evil-scroll-line-to-top nil)
   (evil-scroll-line-up 4))
 
+;; augment jumper
+
+(defun n14/jump-forward()
+  "Jump to previous location"
+  (interactive)
+  (better-jumper-jump-forward 1)
+  (evil-scroll-line-to-top nil)
+  (evil-scroll-line-up 4))
+
+(defun n14/jump-backward()
+  "Jump to previous location"
+  (interactive)
+  (better-jumper-jump-backward 1)
+  (evil-scroll-line-to-top nil)
+  (evil-scroll-line-up 4))
+
+(general-define-key
+:keymaps 'override
+"C-i" 'n14/jump-forward
+"C-o" 'n14/jump-backward)
+
   (defun jethro/org-archive-done-tasks ()
     "Archive all done tasks."
     (interactive)
