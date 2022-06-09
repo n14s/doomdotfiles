@@ -467,8 +467,8 @@
   "
 ^Dailies^        ^Capture^       ^Jump^
 ^^^^^^^^-------------------------------------------------
-_t_: today       _T_: today       _m_: current month
-_r_: tomorrow    _R_: tomorrow    _e_: current year
+_t_: today       _T_: today       _n_: next note
+_r_: tomorrow    _R_: tomorrow    _p_: previous note
 _y_: yesterday   _Y_: yesterday   ^ ^
 _d_: date        ^ ^              ^ ^
 "
