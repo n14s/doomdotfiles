@@ -1950,6 +1950,24 @@ With a prefix ARG, remove start location."
           :desc "hydra error" "e" 'n14/hydra-error/body
          ))
 
+; hydra for dired
+(defhydra n14/hydra-dired (:hint nil)
+("1" dired "dired-jump /home/mrpeanutbutter/")
+("2" ranger "ranger")
+("m" mkdir "mkdir")
+("d" dired-do-delete "del")
+("r" dired-do-rename "rename")
+("h" ranger-up-directory "back")
+("l" ranger-find-file "forward/open")
+("j" ranger-next-file "down")
+("k" ranger-prev-file "up")
+("q" nil "quit"))
+
+(map! :leader
+        (:prefix ("m" . "misc")
+          :desc "hydra dired" "d" 'n14/hydra-dired/body
+         ))
+
 ; hydra for noter
 (defhydra n14/hydra-noter (:hint nil)
 ("n" org-noter "init" :color blue)
