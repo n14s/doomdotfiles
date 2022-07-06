@@ -1953,7 +1953,7 @@ With a prefix ARG, remove start location."
 
 ; hydra for dired
 (defhydra n14/hydra-dired (:hint nil)
-("1" dired "dired-jump /home/mrpeanutbutter/")
+("1" dired "dired")
 ("2" ranger "ranger")
 ("m" mkdir "mkdir")
 ("d" dired-do-delete "del")
