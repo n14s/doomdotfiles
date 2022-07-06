@@ -1560,6 +1560,7 @@ With a prefix ARG, remove start location."
 (global-set-key (kbd "C-c c") 'org-capture)
 
 
+(global-set-key (kbd "M-e") 'er/expand-region)
 
 
 
