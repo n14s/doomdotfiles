@@ -479,8 +479,8 @@ _d_: date        ^ ^              ^ ^
   ("T" org-roam-dailies-capture-today :color blue)
   ("R" org-roam-dailies-capture-tomorrow :color blue)
   ("Y" org-roam-dailies-capture-yesterday :color blue)
-  ("m" n14/org-roam-goto-month :color blue)
-  ("e" n14/org-roam-goto-year :color blue)
+  ("n" org-roam-dailies-goto-next-note :color blue)
+  ("p" org-roam-dailies-goto-previous-note :color blue)
   ("c" nil "cancel"))
 
 (defun org-roam-node-insert-immediate (arg &rest args)
