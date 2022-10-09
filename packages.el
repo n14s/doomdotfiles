@@ -152,3 +152,6 @@
 (package! lsp-pyright)
 
 (package! git-timemachine)
+(package! transpose-frame)
+
+;(package! elfeed-score)

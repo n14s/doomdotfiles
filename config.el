@@ -186,7 +186,9 @@
 (map! :leader
         :prefix "n"
         "c" #'org-capture)
-  (map! :map org-mode-map
+
+
+(map! :map org-mode-map
         "M-n" #'outline-next-visible-heading
         "M-p" #'outline-previous-visible-heading)
 
@@ -228,6 +230,19 @@
 :keymaps 'override
 "C-i" 'n14/jump-forward
 "C-o" 'n14/jump-backward)
+
+;;(evil-define-key
+;;  (kbd "C-o") 'n14/jump-backward)
+
+;; set sensible org-headlines keys
+(map! :map org-mode-map
+        "C-<" #'org-demote-subtree
+        "C->" #'org-promote-subtree
+        "C-M-<" #'org-do-demote
+        "C-M->" #'org-do-promote)
+
+;; unset evil emacs state key
+(global-unset-key (kbd "C-z"))
 
   (defun jethro/org-archive-done-tasks ()
     "Archive all done tasks."
@@ -784,7 +799,7 @@ position."
 '(("inbox::" . "grey"))
       )
 
-(setq org-log-done 'time
+(setq ;org-log-done 'time
       org-log-into-drawer t
       org-log-state-notes-insert-after-drawers nil)
 
@@ -1264,10 +1279,53 @@ With a prefix ARG, remove start location."
                entry
                (file+headline org-my-anki-file "Dispatch Shelf")
                "* %<%H:%M>   %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Mega\n:END:\n** Text\n%x\n** Extra\n"))
-
 )
 
 
+;; elfeed
+;;(use-package! elfeed-score
+;;  :after elfeed
+;;  :config
+;;  (elfeed-score-load-score-file "~/.doom.d/elfeed.score") ; See the elfeed-score documentation for the score file syntax
+;;  (setq elfeed-score-serde-score-file "~/.doom.d/elfeed.serde.score")
+;;  (elfeed-score-enable)
+;;  (define-key elfeed-search-mode-map "=" elfeed-score-map))
+;;
+
+(defun elfeed-show-eww-open (&optional use-generic-p)
+  "open with eww"
+  (interactive "P")
+  (let ((browse-url-browser-function #'eww-browse-url))
+    (elfeed-show-visit use-generic-p)))
+
+(defun elfeed-search-eww-open (&optional use-generic-p)
+  "open with eww"
+  (interactive "P")
+  (let ((browse-url-browser-function #'eww-browse-url))
+    (elfeed-search-browse-url use-generic-p)))
+
+; hydra for elfeed
+(defhydra n14/hydra-elfeed (:hint nil)
+("b" elfeed-show-eww-open "eww show" :color blue)
+("B" elfeed-search-eww-open "eww search" :color blue)
+("q" nil "quit"))
+
+(map! :leader
+        (:prefix ("m" . "misc")
+          :desc "hydra elfeed" "r" 'n14/hydra-elfeed/body
+         ))
+
+
+
+
+(setq browse-url-browser-function
+      '(("https:\\/\\/www\\.youtu\\.*be." . browse-url-mpv)
+        ("." . browse-url-generic)))
+
+(defun browse-url-mpv (url &optional single)
+  (start-process "mpv" nil "mpv" (shell-quote-argument url)))
+
+;; centaur-tabs
 (use-package! centaur-tabs
   :demand
   :config
@@ -1367,8 +1425,8 @@ With a prefix ARG, remove start location."
   :config
    (defun google-translate--search-tkk () "Search TKK." (list 430675 2721866130)))
 
-(dolist (hook '(org-mode-hook))
-  (add-hook hook (lambda () (flyspell-mode 0)) t))
+;;(dolist (hook '(org-mode-hook))
+;;  (add-hook hook (lambda () (flyspell-mode 0)) t))
 
 
 (use-package anki-editor
@@ -1376,6 +1434,7 @@ With a prefix ARG, remove start location."
   :config
   ; I like making decks
   (setq anki-editor-create-decks 't))
+
 
 
 
@@ -1394,12 +1453,14 @@ With a prefix ARG, remove start location."
   :diminish
   :bind (("C-s" . swiper)
          :map ivy-minibuffer-map
-         ("TAB" . ivy-alt-done)
-         ("C-l" . ivy-alt-down)
+         ("TAB" . ivy-partial-or-done)
+         ("M-l" . ivy-partial-or-done)
+         ("C-l" . ivy-alt-done)
          ("C-j" . ivy-next-line)
          ("C-k" . ivy-previous-line)
          ("C-S-l" . ivy-immediate-done)
          :map ivy-switch-buffer-map
+         ("M-l" . ivy-partial-or-done)
          ("C-k" . ivy-previous-line)
          ("C-l" . ivy-done)
          ("C-d" . ivy-switch-buffer-kill)
@@ -1658,8 +1719,8 @@ With a prefix ARG, remove start location."
 
 (define-key ctl-x-4-map "t" 'toggle-window-split)
 ;; vertical split by default
-(setq split-height-threshold nil)
-(setq split-width-threshold 0)
+;;(setq split-height-threshold nil)
+;;(setq split-width-threshold 0)
 
 
 
@@ -1696,6 +1757,9 @@ With a prefix ARG, remove start location."
        :desc "find" "f" 'org-roam-node-find
           :desc "insert" "i" 'org-roam-node-insert
           ))
+
+
+
 
 ;; Make ESC quit stuff like C-g
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -1781,10 +1845,27 @@ With a prefix ARG, remove start location."
       ("d" "default" plain
   (file "/home/mrpeanutbutter/Documents/notes/roam/templates/roam-def.org")
   :target
-  (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+  (file+head "${slug}.org" "#+title: ${title}\n")
   :unnarrowed t)
       )
       )
+
+; rename roam file to title on save
+(add-hook! 'after-save-hook
+           (defun n14/org-rename-to-new-title ()
+             (when-let*
+                 ((old-file (buffer-file-name))
+                  (is-roam-file (org-roam-file-p old-file))
+                  (file-node (save-excursion
+                               (goto-char 1)
+                               (org-roam-node-at-point)))
+                  (slug (org-roam-node-slug file-node))
+                  (new-file (expand-file-name (concat slug ".org")))
+                  (different-name? (not (string-equal old-file new-file))))
+               (rename-buffer new-file)
+               (rename-file old-file new-file)
+               (set-visited-file-name new-file)
+               (set-buffer-modified-p nil))))
 
 ;; (setq org-noter-notes-search-path "/home/mrpeanutbutter/Documents/notes/roam/refs")
 
@@ -1834,7 +1915,7 @@ With a prefix ARG, remove start location."
 
 
 
-(global-set-key (kbd "Q") 'evil-execute-macro)
+(evil-define-key 'normal ‘global “Q” ’evil-execute-macro)
 
 
 
@@ -1886,7 +1967,7 @@ With a prefix ARG, remove start location."
 (add-hook 'go-mode-hook #'yas-minor-mode)
 
 
-(format-all-mode -1)
+;; (format-all-mode -1)
 
 (setq auth-sources '("~/.authinfo"))
 
@@ -1908,6 +1989,19 @@ With a prefix ARG, remove start location."
           :desc "node immediate" "I" 'org-roam-node-insert-immediate
           :desc "dailies" "d" 'n14/org-roam-jump-menu/body
          ))
+
+;(when (bound-and-true-p hydra-examples-verbatim)
+;  (defvar whitespace-mode nil)
+;  (global-set-key
+;   (kbd "SPC m m")
+;   (defhydra hydra-toggle-simple (:color blue)
+;     "toggle"
+;     ("a" abbrev-mode "abbrev")
+;     ("d" toggle-debug-on-error "debug")
+;     ("f" auto-fill-mode "fill")
+;     ("t" toggle-truncate-lines "truncate")
+;     ("w" whitespace-mode "whitespace")
+;     ("q" nil "cancel"))))
 
 ; hydra for modes
 (defhydra n14/hydra-modes (:hint nil)
@@ -1997,5 +2091,37 @@ With a prefix ARG, remove start location."
         (:prefix ("m" . "misc")
           :desc "hydra lang" "l" 'n14/hydra-lang/body
          ))
+
+
+
+(defun n14s/dired-in-side-buffer ()
+  "Display Dired in a side window."
+  (interactive)
+  (let* ((dir (read-directory-name "Direcotry: "))
+         (buf (dired-noselect dir)))
+    (select-window
+     (display-buffer-in-side-window buf
+                                   '((side . left)
+                                     (window-width . 30)
+                                     (slot . -1)
+                                     (window-parameters . ((mode-line-format . none))))))))
+
+
+(map! :leader
+        (:prefix ("f" . "file")
+          :desc "dir left" "h" 'n14s/dired-in-side-buffer
+         ))
+
+
+(global-set-key (kbd "M-W") 'elfeed)
+
+(global-set-key (kbd "M-R") 'transpose-frame)
+
+(global-set-key (kbd "M-F") 'doom/window-maximize-buffer)
+
+
+(setq browse-url-firefox-program "/home/mrpeanutbutter/program/firefox/firefox")
+(setq browse-url-generic-program "/home/mrpeanutbutter/program/firefox/firefox"
+      browse-url-browser-function 'browse-url-generic)
 
 
