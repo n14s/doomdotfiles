@@ -82,12 +82,12 @@
 
 ;; org
 (setq
-   org_notes (concat (getenv "HOME") "/Documents/notes/")
+   org_notes (concat (getenv "HOME") "/notes/")
    org_doc (concat (getenv "HOME") "/Documents/")
    zot_bib (concat (getenv "HOME") "/drive/org/master.bib")
    org-directory org_notes
    deft-directory org_notes
-   org-roam-directory "~/Documents/notes/roam"
+   org-roam-directory "~/notes/roam"
    org-my-anki-file "~/drive/org/anki/anki.org"
    )
 
@@ -412,11 +412,11 @@
         :if-new (file+head ,nm/daily-note-filename
                            ,nm/daily-note-header)
  :unnarrowed t)
-("c" "check" plain (file "~/Documents/notes/roam/templates/check.org")
+("c" "check" plain (file "~/notes/roam/templates/check.org")
  :if-new (file+head ,nm/daily-note-filename
                     ,nm/daily-note-header)
  :unnarrowed t)
-("s" "sleep" plain (file "~/Documents/notes/roam/templates/sleep.org")
+("s" "sleep" plain (file "~/notes/roam/templates/sleep.org")
  :if-new (file+head ,nm/daily-note-filename
                     ,nm/daily-note-header)
  :unnarrowed t)
@@ -432,7 +432,7 @@
                              ,nm/daily-note-header
                              ("Meeting"))
  :unnarrowed t)
-;;("t" "tasks" plain (file "~/Documents/notes/roam/templates/tasks.org")
+;;("t" "tasks" plain (file "~/notes/roam/templates/tasks.org")
 ;; :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
 ;; :unnarrowed t)
 ("t" "task" entry
@@ -444,7 +444,7 @@
  :empty-lines 1)
       ))
 
-  (org-roam-directory "~/Documents/notes/roam")
+  (org-roam-directory "~/notes/roam")
   (org-roam-completion-everywhere t)
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . org-roam-node-find)
@@ -520,7 +520,7 @@ _d_: date        ^ ^              ^ ^
   (require 'org-ref) ; optional: if Org Ref is not loaded anywhere else, load it here
   :requires bibtex-completion
   :hook (org-roam-mode . org-roam-bibtex-mode)
-  :load-path "~/.emacs.d/.local/straight/build-27.1/org-roam-bibtex"
+  ; :load-path "~/.emacs.d/.local/straight/build-27.1/org-roam-bibtex"
   :bind (:map org-roam-bibtex-mode-map
          (("C-c m f" . orb-find-non-ref-file))
          :map org-mode-map
@@ -1920,13 +1920,13 @@ With a prefix ARG, remove start location."
 
 
 ;; pyvenv
-(use-package! pyvenv
-  :diminish
-  :config
-  (setenv "WORKON_HOME" "~/.pyenv/versions")
-  (setq pyvenv-mode-line-indicator
-        '(pyvenv-virtual-env-name ("[venv:" pyvenv-virtual-env-name "] ")))
-  (pyvenv-mode +1))
+;(use-package! pyvenv
+;  :diminish
+;  :config
+;  (setenv "WORKON_HOME" "~/.pyenv/versions")
+;  (setq pyvenv-mode-line-indicator
+;        '(pyvenv-virtual-env-name ("[venv:" pyvenv-virtual-env-name "] ")))
+;  (pyvenv-mode +1))
 
 (global-set-key (kbd "M-\"") 'insert-pair)
 (global-set-key (kbd "M-[") 'insert-pair)
