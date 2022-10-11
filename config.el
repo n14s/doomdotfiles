@@ -66,7 +66,7 @@
  x-stretch-cursor t)                                           ; Stretch cursor to the glyph width
 
 (setq
-      doom-font (font-spec :family "Iosevka" :size 24)
+;      doom-font (font-spec :family "Iosevka" :size 24)
       display-line-numbers-type t
       undo-limit 80000000                          ; Raise undo-limit to 80Mb
       evil-want-fine-undo t                             ; By default while in insert all changes are one big blob. Be more granular
@@ -82,31 +82,32 @@
 
 ;; org
 (setq
-   org_notes (concat (getenv "HOME") "/notes/")
+   org_notes (concat (getenv "HOME") "~/notes/")
    org_doc (concat (getenv "HOME") "/Documents/")
-   zot_bib (concat (getenv "HOME") "/drive/org/master.bib")
+;   zot_bib (concat (getenv "HOME") "/notes/master.bib")
    org-directory org_notes
    deft-directory org_notes
    org-roam-directory "~/notes/roam"
-   org-my-anki-file "~/drive/org/anki/anki.org"
+;   org-my-anki-file "~/drive/org/anki/anki.org"
    )
 
-(defun efs/org-font-setup ()
+;(defun efs/org-font-setup ()
 ;; Set faces for heading levels
-  (dolist (face '((org-level-1 . 1.2)
-                  (org-level-2 . 1.1)
-                  (org-level-3 . 1.05)
-                  (org-level-4 . 1.0)
-                  (org-level-5 . 1.1)
-                  (org-level-6 . 1.1)
-                  (org-level-7 . 1.1)
-                  (org-level-8 . 1.1)))
-    (set-face-attribute (car face) nil :font "Latin Modern Sans" :weight 'regular :height (cdr face))))
+;  (dolist (face '((org-level-1 . 1.2)
+;                  (org-level-2 . 1.1)
+;                  (org-level-3 . 1.05)
+;                  (org-level-4 . 1.0)
+;                  (org-level-5 . 1.1)
+;                  (org-level-6 . 1.1)
+;                  (org-level-7 . 1.1)
+;                  (org-level-8 . 1.1)))
+;    (set-face-attribute (car face) nil :font "Latin Modern Sans" :weight 'regular :height (cdr face))))
 
 (use-package! org
   :config
   (setq org-ellipsis " ▾")
-  (efs/org-font-setup))
+;  (efs/org-font-setup)
+)
 
 (use-package! org-bullets
   :after org
@@ -115,15 +116,15 @@
   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
 
-(use-package! org-download
-  :after org
-  :config
-  (setq-default org-download-image-dir "./images/"
-                org-download-screenshot-method "gnome-screenshot -a -f %s"
-                org-download-method 'directory
-                org-download-heading-lvl 1
-                )
-  )
+; (use-package! org-download
+;   :after org
+;   :config
+;   (setq-default org-download-image-dir "./images/"
+;                 org-download-screenshot-method "gnome-screenshot -a -f %s"
+;                 org-download-method 'directory
+;                 org-download-heading-lvl 1
+;                 )
+;   )
 
 
 
@@ -249,10 +250,9 @@
     (interactive)
     (org-map-entries 'org-archive-subtree "/DONE" 'file))
   (require 'find-lisp)
-  (setq jethro/org-agenda-directory (file-truename "~/drive/org/gtd/"))
-  (setq org-agenda-files
-        (find-lisp-find-files jethro/org-agenda-directory "\.org$"))
-
+;  (setq jethro/org-agenda-directory (file-truename "~/drive/org/gtd/"))
+;  (setq org-agenda-files
+;        (find-lisp-find-files jethro/org-agenda-directory "\.org$"))
   )
 
 
@@ -285,10 +285,10 @@
     (setq
          org-ref-completion-library 'org-ref-ivy-cite
          org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex
-         org-ref-default-bibliography (list "/home/mrpeanutbutter/drive/org/master.bib")
-         org-ref-bibliography-notes "/home/mrpeanutbutter/Documents/notes/roam/refs/bibnotes.org"
+   ;      org-ref-default-bibliography (list "~/notes/master.bib")
+         org-ref-bibliography-notes "~/notes/roam/refs/bibnotes.org"
          org-ref-note-title-format "* TODO %y - %t\n :PROPERTIES:\n  :Custom_ID: %k\n  :NOTER_DOCUMENT: %F\n :ROAM_KEY: cite:%k\n  :AUTHOR: %9a\n  :JOURNAL: %j\n  :YEAR: %y\n  :VOLUME: %v\n  :PAGES: %p\n  :DOI: %D\n  :URL: %U\n :END:\n\n"
-         org-ref-notes-directory "/home/mrpeanutbutter/Documents/notes/roam/refs"
+         org-ref-notes-directory "~/notes/roam/refs"
          org-ref-notes-function 'orb-edit-notes
     ))
 
@@ -297,8 +297,8 @@
 (setq org-latex-prefer-user-labels t)
 (after! org-ref
   (setq
-   bibtex-completion-notes-path "/home/mrpeanutbutter/Documents/notes/roam/refs"
-   bibtex-completion-bibliography "/home/mrpeanutbutter/drive/org/master.bib"
+   bibtex-completion-notes-path "~/notes/roam/refs"
+;   bibtex-completion-bibliography "~/notes/master.bib"
    bibtex-completion-pdf-field "file"
    bibtex-completion-notes-template-multiple-files
    (concat
@@ -505,8 +505,8 @@ _d_: date        ^ ^              ^ ^
                                                   '(:immediate-finish t)))))
     (apply #'org-roam-node-insert args)))
 
-(after! org-ref
-  (setq org-ref-default-bibliography `,(list (concat zot_bib))))
+;(after! org-ref
+;  (setq org-ref-default-bibliography `,(list (concat zot_bib))))
 
 (use-package! org-roam-protocol
   :after org-protocol)
@@ -1265,20 +1265,20 @@ With a prefix ARG, remove start location."
            :empty-lines 1    ; properties
            :created t        ; properties
            ))
-(add-to-list 'org-capture-templates
-             '("a" "Anki basic"
-               entry
-               (file+headline org-my-anki-file "Dispatch Shelf")
-               "* %<%H:%M>   %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: Mega\n:END:\n** Front\n%?\n** Back\n%x\n"
-               :prepend t        ; properties
-               :empty-lines 1    ; properties
-               :created t
-               ))
-(add-to-list 'org-capture-templates
-             '("A" "Anki cloze"
-               entry
-               (file+headline org-my-anki-file "Dispatch Shelf")
-               "* %<%H:%M>   %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Mega\n:END:\n** Text\n%x\n** Extra\n"))
+;(add-to-list 'org-capture-templates
+;             '("a" "Anki basic"
+;               entry
+;               (file+headline org-my-anki-file "Dispatch Shelf")
+;               "* %<%H:%M>   %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: Mega\n:END:\n** Front\n%?\n** Back\n%x\n"
+;               :prepend t        ; properties
+;               :empty-lines 1    ; properties
+;               :created t
+;               ))
+;(add-to-list 'org-capture-templates
+;             '("A" "Anki cloze"
+;               entry
+;               (file+headline org-my-anki-file "Dispatch Shelf")
+;               "* %<%H:%M>   %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Mega\n:END:\n** Text\n%x\n** Extra\n"))
 )
 
 
@@ -1838,12 +1838,12 @@ With a prefix ARG, remove start location."
 
 (setq org-roam-capture-templates
       '(("r" "bibliography reference" plain
-         (file "/home/mrpeanutbutter/Documents/notes/roam/templates/roam-ref.org")
+         (file "~/notes/roam/templates/roam-ref.org")
          :target
          (file+head "refs/${citekey}.org" "#+title: ${title}\n")
          :unnarrowed t)
       ("d" "default" plain
-  (file "/home/mrpeanutbutter/Documents/notes/roam/templates/roam-def.org")
+  (file "~/notes/roam/templates/roam-def.org")
   :target
   (file+head "${slug}.org" "#+title: ${title}\n")
   :unnarrowed t)
@@ -2120,8 +2120,8 @@ With a prefix ARG, remove start location."
 (global-set-key (kbd "M-F") 'doom/window-maximize-buffer)
 
 
-(setq browse-url-firefox-program "/home/mrpeanutbutter/program/firefox/firefox")
-(setq browse-url-generic-program "/home/mrpeanutbutter/program/firefox/firefox"
-      browse-url-browser-function 'browse-url-generic)
+;(setq browse-url-firefox-program "/home/mrpeanutbutter/program/firefox/firefox")
+;(setq browse-url-generic-program "/home/mrpeanutbutter/program/firefox/firefox"
+;      browse-url-browser-function 'browse-url-generic)
 
 
