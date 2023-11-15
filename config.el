@@ -52,7 +52,7 @@
 
 ;; Basic Stuff: Appearance etc
 ;(setq doom-theme 'doom-one)
-(setq doom-theme 'doom-gruvbox)
+;; (setq doom-theme 'doom-gruvbox)
 
 (if (eq initial-window-system 'x)                 ; if started by emacs command or desktop file
     (toggle-frame-maximized)
@@ -66,7 +66,7 @@
  x-stretch-cursor t)                                           ; Stretch cursor to the glyph width
 
 (setq
-;      doom-font (font-spec :family "Iosevka" :size 24)
+doom-font (font-spec :family "Iosevka" :size 24)
       display-line-numbers-type t
       undo-limit 80000000                          ; Raise undo-limit to 80Mb
       evil-want-fine-undo t                             ; By default while in insert all changes are one big blob. Be more granular
@@ -82,9 +82,9 @@
 
 ;; org
 (setq
-   org_notes (concat (getenv "HOME") "~/notes/")
+   org_notes (concat (getenv "HOME") "/notes/")
    org_doc (concat (getenv "HOME") "/Documents/")
-;   zot_bib (concat (getenv "HOME") "/notes/master.bib")
+;   zot_bib (concat (getenv "HOME") "notes/master.bib")
    org-directory org_notes
    deft-directory org_notes
    org-roam-directory "~/notes/roam"
@@ -250,9 +250,9 @@
     (interactive)
     (org-map-entries 'org-archive-subtree "/DONE" 'file))
   (require 'find-lisp)
-;  (setq jethro/org-agenda-directory (file-truename "~/drive/org/gtd/"))
-;  (setq org-agenda-files
-;        (find-lisp-find-files jethro/org-agenda-directory "\.org$"))
+  (setq jethro/org-agenda-directory (file-truename "~/org/gtd/"))
+  (setq org-agenda-files
+        (find-lisp-find-files jethro/org-agenda-directory "\.org$"))
   )
 
 
@@ -1387,20 +1387,21 @@ With a prefix ARG, remove start location."
   ;; dictionary' even though multiple dictionaries will be configured
   ;; in next line.
   (setenv "LANG" "en_US")
-  (setq ispell-program-name "hunspell")
+  ;; (setq ispell-program-name "hunspell")
   ;; Configure German, Swiss German, and two variants of English.
-  (setq ispell-dictionary "de_DE")
+  ;; (setq ispell-dictionary "de_DE")
   ;; ispell-set-spellchecker-params has to be called
   ;; before ispell-hunspell-add-multi-dic will work
   (ispell-set-spellchecker-params)
   ;; For saving words to the personal dictionary, don't infer it from
   ;; the locale, otherwise it would save to ~/.hunspell_de_DE.
-  (setq ispell-personal-dictionary "~/.hunspell_personal"))
+  ;; (setq ispell-personal-dictionary "~/.hunspell_personal")
+)
 
 ;; The personal dictionary file has to exist, otherwise hunspell will
 ;; silently not use it.
-(unless (file-exists-p ispell-personal-dictionary)
-  (write-region "" nil ispell-personal-dictionary nil 0))
+; (unless (file-exists-p ispell-personal-dictionary)
+;  (write-region "" nil ispell-personal-dictionary nil 0))
 
 ;; bind save word to dict to key
 (defun my-save-word ()
@@ -1652,6 +1653,14 @@ With a prefix ARG, remove start location."
           :desc "insert" "i" 'org-insert-link
           ))
 
+;; org links
+(map! :leader
+      :map (org-mode-map)
+      (:prefix ("o" . "org")
+          :desc "todo" "t" 'org-todo
+          ))
+
+
 (map! :leader
       (:prefix ("l" . "link")
           :desc "follow" "f" 'link-hint-open-link-at-point
@@ -1891,6 +1900,8 @@ With a prefix ARG, remove start location."
 ;       :desc "helm-bibtex" "r" 'helm-bibtex
 ;          :desc "insert" "i" 'org-ref-insert-link
 ;          ))
+;
+;
 
 (map! :leader
       "r" nil
@@ -1934,8 +1945,8 @@ With a prefix ARG, remove start location."
 ; faces
 ; add magit status file font bg color to distinguish better
 (custom-set-faces!
-  '(magit-diff-file-heading :background "#3b0024")
-  '(magit-branch-current :background "#73092b"))
+  '(magit-diff-file-heading :background "#999999")
+  '(magit-branch-current :background "#999999"))
 
 
 ; find faces underneath point
@@ -2092,6 +2103,23 @@ With a prefix ARG, remove start location."
           :desc "hydra lang" "l" 'n14/hydra-lang/body
          ))
 
+; hydra for tables
+(defhydra n14/hydra-tables (:hint nil)
+("j" evil-next-line "down")
+("k" evil-previous-line "up")
+("h" evil-backward-char "left")
+("l" evil-forward-char "right")
+("J" org-table-move-cell-down "cell down")
+("K" org-table-move-cell-up "cell up")
+("H" org-table-move-cell-left "cell left")
+("L" org-table-move-cell-right "cell right")
+("q" nil "quit"))
+
+(map! :leader
+        (:prefix ("m" . "misc")
+          :desc "hydra tables" "t" 'n14/hydra-tables/body
+         ))
+
 
 
 (defun n14s/dired-in-side-buffer ()
@@ -2125,3 +2153,16 @@ With a prefix ARG, remove start location."
 ;      browse-url-browser-function 'browse-url-generic)
 
 
+
+(require 'org-inlinetask)
+
+; set theme depending on time of day
+(defun my-doom-themes-set-theme ()
+  (let ((hour (string-to-number (format-time-string "%H"))))
+    (if (or (< hour 7) (> hour 19))
+        (load-theme 'doom-gruvbox)
+      (load-theme 'doom-one-light))))
+
+(add-hook 'after-init-hook #'my-doom-themes-set-theme)
+(add-hook 'focus-in-hook #'my-doom-themes-set-theme)
+(add-hook 'org-mode-hook #'my-doom-themes-set-theme)

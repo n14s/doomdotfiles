@@ -28,7 +28,8 @@
        ;;+childframe      ; a better UI for ivy (Emacs 26+)
         +prescient       ; better? filtering and sorting?
         +icons           ; enables file icons
-        +fuzzy)          ; enable fuzzy search backend for ivy
+        ;;+fuzzy          ; enable fuzzy search backend for ivy
+        )
 
        :ui
        deft              ; notational velocity for Emacs
